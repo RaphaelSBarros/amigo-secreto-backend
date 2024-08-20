@@ -26,7 +26,10 @@ export const getOne = async (filters: getOneFilters) => {
   }
 };
 
-type PeopleCreateData = Prisma.Args<typeof prisma.eventPeople,"create">["data"];
+type PeopleCreateData = Prisma.Args<
+  typeof prisma.eventPeople,
+  "create"
+>["data"];
 export const add = async (data: PeopleCreateData) => {
   try {
     if (!data.id_group) return false;
@@ -38,6 +41,26 @@ export const add = async (data: PeopleCreateData) => {
     if (!group) return false;
 
     return await prisma.eventPeople.create({ data });
+  } catch (err) {
+    return false;
+  }
+};
+
+type UpdateFilters = {
+  id?: number;
+  id_event: number;
+  id_group?: number;
+};
+type PeopleUpdateData = Prisma.Args<
+  typeof prisma.eventPeople,
+  "update"
+>["data"];
+export const update = async (
+  filters: UpdateFilters,
+  data: PeopleUpdateData
+) => {
+  try {
+    return await prisma.eventPeople.updateMany({ where: filters, data });
   } catch (err) {
     return false;
   }
