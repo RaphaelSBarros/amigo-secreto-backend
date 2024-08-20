@@ -65,3 +65,12 @@ export const update = async (
     return false;
   }
 };
+
+type DeleteFilters = { id: number; id_event?: number; id_group?: number };
+export const remove = async (filters: DeleteFilters) => {
+  try {
+    return prisma.eventPeople.delete({ where: filters })
+  } catch (err) {
+    return false;
+  }
+};
